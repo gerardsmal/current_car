@@ -13,7 +13,8 @@ public class ReflectionManager {
 	public void invokeExecute(String[] param  ) throws AcademyException{
 		try {
 			String methodName = "execute";
-			String className = "Process" + param[StartCar.TIPO_VEICOLO];
+			String tVeicolo = param[StartCar.TIPO_VEICOLO].substring(0, 1).toUpperCase() + param[StartCar.TIPO_VEICOLO].substring(1).toLowerCase(); 			
+			String className = "Process" + tVeicolo;
 			Class<?> cl = Class.forName(PACKAGE_NAME + "." + className);
 			Constructor<?> ctor = cl.getConstructor();
 			

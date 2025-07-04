@@ -1,5 +1,7 @@
 package com.betacom.car.singletone;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,12 +9,7 @@ import java.util.Map;
 
 import com.betacom.car.Models.Veicolo;
 
-/*
- * gestione dell'ID veicolo
- * gestione della targa (univoca)
- * gestrion della lista veicolo (inserimento)
- * display della lista4
- */
+
 public class ListManager {
 
 	private static ListManager instance = null;
@@ -22,11 +19,6 @@ public class ListManager {
 	Map<String, String> lTarge = new HashMap<String, String>();
 	private Integer id = 0;
 
-	String alim = "benzina, diesel,electica,ibrida,manuale";
-	String cat = "strada,fuoristrada,suv,mtb,cross";
-	String colore = "bianca,nero,verde,giallo,marrone,rossa";
-	String marca = "Fiat,Renault,BMW,Telsla,Bianchi,Yamaha,Mercedes";
-	String sospenzione = "senza,mono,bi";
 	
 	private ListManager() {
 	}
@@ -38,12 +30,18 @@ public class ListManager {
 		return instance;
 	}
 	
-	public void loadConstant() {
-		controlli.put("alim", alim.split(","));		
-		controlli.put("cat", cat.split(","));	
-		controlli.put("colore", colore.split(","));	
-		controlli.put("marca", marca.split(","));	
-		controlli.put("sospenzione", sospenzione.split(","));
+	public void loadConstant() {		
+		String path = "src/constants_car.txt";
+		try (BufferedReader reader = new BufferedReader(new FileReader(path))){
+			String line = reader.readLine();
+			while (line != null) {
+				String[] pp = line.split("=");
+				controlli.put(pp[0], pp[1].split(","));
+				line = reader.readLine();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -73,7 +71,9 @@ public class ListManager {
 		return v;
 		
 	}
-	public List<Veicolo> getList(){
-		return listV;
+	public void showVeicoli(){
+		for (Veicolo v:listV) {
+			System.out.println(v);
+		}
 	}
 }

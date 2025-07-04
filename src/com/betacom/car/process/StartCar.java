@@ -1,11 +1,7 @@
 package com.betacom.car.process;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.List;
 
-import com.betacom.car.Models.Veicolo;
 import com.betacom.car.exception.AcademyException;
 import com.betacom.car.singletone.ListManager;
 import com.betacom.car.utilities.ReflectionManager;
@@ -61,11 +57,7 @@ public class StartCar extends ReflectionManager{
 		 * list
 		 */
 		
-		List<Veicolo> lV = ListManager.getInstance().getList();
-		for(Veicolo v:lV) {
-			System.out.println(v);
-		}
-		
+		ListManager.getInstance().showVeicoli();
 		
 		
 		return true;
