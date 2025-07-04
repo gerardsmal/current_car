@@ -8,8 +8,8 @@ public class VeicoloControl {
 
 	public Veicolo verify(Veicolo vei, String[] params) throws AcademyException{
 		
-		
-	vei.setTipoVeicolo(params[StartCar.TIPO_VEICOLO]);
+		String tVeicolo = params[StartCar.TIPO_VEICOLO].substring(0, 1).toUpperCase() + params[StartCar.TIPO_VEICOLO].substring(1).toLowerCase();
+		vei.setTipoVeicolo(tVeicolo);
 		
 		try {
 			vei.setNumeroRuote(Integer.parseInt(params[StartCar.NUMERO_RUOTE]));			

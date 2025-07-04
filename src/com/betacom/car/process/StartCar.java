@@ -43,22 +43,31 @@ public class StartCar extends ReflectionManager{
 		System.out.println("Begin StartCar");
 		ListManager.getInstance().loadConstant();
 		
-		for(String par:params) {
-			String[] param = par.split(",");
-			try {
-				invokeExecute(param);
+		for(String inp:params) {
+			String[] oper = inp.split(":");
+			if ("add".equalsIgnoreCase(oper[0].trim())) {
+				String[] param = oper[1].split(",");
+				try {
+					invokeExecute(param);					
+				} catch (AcademyException e) {
+					System.out.println(e.getMessage());
+				} 
+			} else if ("import".equalsIgnoreCase(oper[0].trim())) {
+				String path=oper[1].trim(); 
+				System.out.println("Import veicoli da " + path);
+				ListManager.getInstance().importVeicoli(path);
+			} else if ("export".equalsIgnoreCase(oper[0].trim())) {
+				String path=oper[1].trim(); 
+				System.out.println("Export veicoli dentro " + path);
+				ListManager.getInstance().exportVeicoli(path);				
+			} else if ("list".equalsIgnoreCase(oper[0].trim())) {
+				System.out.println("Elenco veicoli ");
+				ListManager.getInstance().showVeicoli();
 				
-			} catch (AcademyException e) {
-				System.out.println(e.getMessage());
-			} 
+			}
+			
 		}
-		
-		/*
-		 * list
-		 */
-		
-		ListManager.getInstance().showVeicoli();
-		
+
 		
 		return true;
 	}

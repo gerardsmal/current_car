@@ -1,0 +1,30 @@
+[
+	{
+	  "numeroPorte": 3,
+	  "Targa": "EL123GX",
+	  "cc": 1300,
+	  "id": 5,
+	  "tipoVeicolo": "Macchina",
+	  "numeroRuote": 4,
+	  "tipoAlimentazione": "benzina",
+	  "categoria": "strada",
+	  "colore": "verde",
+	  "marca": "renault",
+	  "annoProduzione": 2024,
+	  "modello": "Clio"
+	},
+	{
+	  "numeroPorte": 5,
+	  "Targa": "EL123GZ",
+	  "cc": 2000,
+	  "id": 6,
+	  "tipoVeicolo": "Macchina",
+	  "numeroRuote": 4,
+	  "tipoAlimentazione": "diesel",
+	  "categoria": "strada",
+	  "colore": "rosso",
+	  "marca": "fiat",
+	  "annoProduzione": 2023,
+	  "modello": "Fiat"
+	}
+]

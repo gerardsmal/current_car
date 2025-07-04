@@ -2,13 +2,24 @@ package com.betacom.car.singletone;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.betacom.car.Models.Bici;
+import com.betacom.car.Models.Macchina;
+import com.betacom.car.Models.Moto;
 import com.betacom.car.Models.Veicolo;
-
+import com.betacom.car.utilities.RuntimeTypeAdapterFactory;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 public class ListManager {
 
@@ -59,7 +70,7 @@ public class ListManager {
 		if (lTarge.containsKey(targa))
 			return true;
 		
-		lTarge.put(targa, "");
+		lTarge.put(targa.toUpperCase(), "");
 		return false;
 		
 		
@@ -76,4 +87,56 @@ public class ListManager {
 			System.out.println(v);
 		}
 	}
+	
+	public void exportVeicoli(String path) {
+		// set json format
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		
+		// transform list in json and write json file
+	    try (Writer writer = new FileWriter(path)) {
+            gson.toJson(listV, writer);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+	}
+	
+	public void importVeicoli(String path) {
+		Gson gson = new GsonBuilder()
+				  .registerTypeAdapterFactory(
+					        RuntimeTypeAdapterFactory
+					            .of(Veicolo.class, "tipoVeicolo") // "tipoVeicolo" è il campo discriminante nel JSON
+					            .registerSubtype(Macchina.class, "Macchina")
+					            .registerSubtype(Moto.class, "Moto")
+					            .registerSubtype(Bici.class, "Bici")
+					    )
+					    .create();
+        // Read JSON from a file
+        try (Reader reader = new FileReader(path)) {
+            // convert the JSON data to a Java object
+        	Type listType = new TypeToken<List<Veicolo>>(){}.getType(); // se si utilizza List.class Gson no riconoesce l'oggetto reale
+        															    // e per risolvere il problema indica lo crea come LinkedTreeMap
+        																// per risolvere il problema dobbiamo 		
+        																// indicare a Gson di serializzare l'elenco come
+        																// una lista concreta di oggetti Veicolo, 
+        																// non LinkedTreeMap.
+            List<Veicolo> listV1 = gson.fromJson(reader, listType);
+            for(Veicolo v:listV1) {
+            	if (v instanceof Macchina)
+            		v.setTipoVeicolo("Macchina");
+               	if (v instanceof Moto)
+            		v.setTipoVeicolo("Moto");
+               	if (v instanceof Bici)
+            		v.setTipoVeicolo("Bici");
+ 
+            	
+            	
+            	v.setId(++id);
+            	listV.add(v);
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+	}
+	
 }

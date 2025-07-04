@@ -1,6 +1,9 @@
-macchina,4,benzina,strada,verde,renault,2024,Clio,3,EL123GX,1200
-MACchina,4,diesel,strada,rosso,fiat,2023,Fiat,5,EL123Gx,2000
-moto,2,benzina,strada,bianca,Yamaha,2021,R1,EL22239,900
-bici,2,manuale,strada,rosso,Bianchi,2022,B1,9,senza,false
-Macchina,4,benzina,strada,verde,renault,2024,Clio,3,EL123GX,1200
-Tir,4,benzina,strada,verde,renault,2024,Clio,3,EL123GX,1200	
+import:src/import_veicoli.json
+xadd:macchina,4,benzina,strada,bianca,renault,2024,Clio,3,EL123GZ,1200
+xadd:MACchina,4,diesel,strada,rosso,fiat,2023,Fiat,5,EL123GX,2000
+xadd:moto,2,benzina,strada,bianca,Yamaha,2021,R1,EL22239,900
+xadd:bici,2,manuale,mtb,rosso,Tecnizer,2024,B8,9,bi,false
+xadd:Macchina,4,benzina,strada,verde,renault,2024,Clio,3,EL123GX,1200
+xadd:Tir,4,benzina,strada,verde,renault,2024,Clio,3,EL123GX,1200
+xexport:/Users/gerard/Downloads/veicoli.json
+list
