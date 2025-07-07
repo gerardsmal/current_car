@@ -8,6 +8,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,31 +42,26 @@ public class ListManager {
 		return instance;
 	}
 	
-	public void loadConstant() {		
-		String path = "src/constants_car.txt";
-		try (BufferedReader reader = new BufferedReader(new FileReader(path))){
-			String line = reader.readLine();
-			while (line != null) {
-				String[] pp = line.split("=");
-				controlli.put(pp[0], pp[1].split(","));
-				line = reader.readLine();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	
+	public void loadConstant() {
+	    String path = "src/constants_car.txt";
+	    try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+	        reader.lines()   // crea un stream di lines
+	              .map(line -> line.split("="))
+	              .filter(parts -> parts.length == 2)
+	              .forEach(parts -> controlli.put(parts[0], parts[1].split(",")));
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}
-	
-	
+
 	public boolean isValidValue(String key, String value) {
-		String[] values = controlli.get(key);
-		for (String it:values) {
-			if (value.equalsIgnoreCase(it))
-				return true;
-		}
-		return false;
-		
+	    String[] values = controlli.get(key);
+	    return values != null && 
+	    		Arrays.stream(values)
+	    			.anyMatch(it -> value.equalsIgnoreCase(it));
 	}
-	
+
 	public boolean isTargaExist(String targa) {
 		if (lTarge.containsKey(targa))
 			return true;
@@ -83,9 +79,7 @@ public class ListManager {
 		
 	}
 	public void showVeicoli(){
-		for (Veicolo v:listV) {
-			System.out.println(v);
-		}
+		listV.forEach(v -> System.out.println(v));
 	}
 	
 	public void exportVeicoli(String path) {
@@ -120,19 +114,18 @@ public class ListManager {
         																// una lista concreta di oggetti Veicolo, 
         																// non LinkedTreeMap.
             List<Veicolo> listV1 = gson.fromJson(reader, listType);
-            for(Veicolo v:listV1) {
+
+            listV.forEach(v -> {
             	if (v instanceof Macchina)
             		v.setTipoVeicolo("Macchina");
                	if (v instanceof Moto)
             		v.setTipoVeicolo("Moto");
                	if (v instanceof Bici)
             		v.setTipoVeicolo("Bici");
- 
-            	
             	
             	v.setId(++id);
             	listV.add(v);
-            }
+            });
 
         } catch (IOException e) {
             throw new RuntimeException(e);

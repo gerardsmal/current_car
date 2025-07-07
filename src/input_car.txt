@@ -1,5 +1,5 @@
 import:src/import_veicoli.json
-xadd:macchina,4,benzina,strada,bianca,renault,2024,Clio,3,EL123GZ,1200
+add:macchina,4,benzina,strada,bianca,renault,2024,Clio,3,EL123GZ,1200
 xadd:MACchina,4,diesel,strada,rosso,fiat,2023,Fiat,5,EL123GX,2000
 xadd:moto,2,benzina,strada,bianca,Yamaha,2021,R1,EL22239,900
 xadd:bici,2,manuale,mtb,rosso,Tecnizer,2024,B8,9,bi,false
